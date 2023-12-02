@@ -7,7 +7,7 @@ Incredibly handy one-liner scripts for everyday life.
     
 # Windows
 
-[PS] Dumps the DNS resolution cache to dnsdump.txt
+[PS] Dumps the DNS resolution cache to dnsdump.txt (SPANISH).
 
     ipconfig /displaydns | Select-String "Nombre de registro" | ForEach-Object { $_.ToString().Split(":")[1].Trim() } | Out-File -FilePath dnsdump.txt
 
