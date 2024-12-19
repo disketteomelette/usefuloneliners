@@ -9,6 +9,11 @@ Incredibly handy one-liner scripts for everyday life.
 
     rm resultados.txt; echo "Ingrese la dirección URL en formato 'http://pagina.com/directorio/':" && read -r url_base && echo "Descargando archivo diccionario..." && curl -sSLO https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-2.3-big.txt -o diccionario.txt && while IFS= read -r linea; do if [[ $linea == \#* ]]; then continue; fi; linea2=$(echo "$linea" | xargs); url="$url_base$(echo -n "$linea2" | sed 's/ /%20/g')"; curl -I "$url" > temp; cat temp | grep "\< HTTP/1.1 "; echo "-- $linea2 --" >> resultados.txt; cat temp >> resultados.txt; rm temp; done < diccionario.txt
 
+# Lexnet
+
+[Bash] Script designed to run in a folder containing PDF files that lack OCR and do not comply with the PDF-A standard. This script applies OCR to all PDFs, then converts them to PDF-A format and saves them in the 'resultados' folder, ready for Lexnet submission.
+
+    mkdir -p resultado && for pdf in *.pdf; do ocrmypdf "$pdf" "resultado/$pdf" && gs -dPDFA=1 -dBATCH -dNOPAUSE -dQUIET -sOutputFile="resultado/$(basename "$pdf" .pdf)-PDF-A.pdf" "resultado/$pdf" && rm -f "resultado/$pdf"; done
 
 # Misc
 
