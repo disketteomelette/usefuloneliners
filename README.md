@@ -11,7 +11,7 @@ Incredibly handy one-liner scripts for everyday life.
 
 # Lexnet
 
-[Bash] Script designed to run in a folder containing PDF files that lack OCR and do not comply with the PDF-A standard. This script applies OCR to all PDFs, then converts them to PDF-A format and saves them in the 'resultados' folder, ready for Lexnet submission.
+[Bash] Script designed to run in a folder containing PDF files that lack OCR and do not comply with the PDF-A standard. This script applies OCR to all PDFs, then converts them to PDF-A format and saves them in the 'resultados' folder, ready for Lexnet submission. Remember install first dependencies: sudo apt install ocrmypdf ghostscript
 
     mkdir -p resultado && for pdf in *.pdf; do ocrmypdf "$pdf" "resultado/$pdf" && gs -dPDFA=1 -dBATCH -dNOPAUSE -dQUIET -sOutputFile="resultado/$(basename "$pdf" .pdf)-PDF-A.pdf" "resultado/$pdf" && rm -f "resultado/$pdf"; done
 
