@@ -31,3 +31,8 @@ Incredibly handy one-liner scripts for everyday life.
 [Batch] System info snapshot and dump to infodump.txt. Generates an information file that includes running processes with detailed information, username (in three different forms), details of the current user (privileges and groups), the registration status of the device in Azure, and the Kerberos ticket cache.
 
     (tasklist /V & whoami & whoami /all & set & echo %username% & dsregcmd /status & klist & wmic.exe computersystem get username) >> infodump.txt
+
+[PS] Get all "ESTABLISHED" ips from netstat and check them on ipinfo.io. 
+
+    netstat -nao | Select-String "ESTABLISHED" | ForEach-Object { ($_ -split '\s+')[3].Split(':')[0] } | Where-Object { $_ -and ($_ -match '^\d{1,3}(\.\d{1,3}){3}$') } | Sort-Object -Unique | ForEach-Object { $ip = $_; "$ip => $((Invoke-RestMethod -Uri ('https://ipinfo.io/' + $ip + '/json') -ErrorAction SilentlyContinue | Select-Object org, country, hostname | Out-String).Trim())" }
+
